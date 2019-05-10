@@ -173,6 +173,12 @@ void cpu_run(struct cpu *cpu)
       }
       break;
 
+    case JMP:
+      // Jump to the address stored in the given register
+      // Set the PC to the address stored in the given register.
+      cpu->pc = cpu->reg[ops[1]] - ops[0] - 1;
+      break;
+
     default:
       printf("Unknown instruction at %d: %d\n", cpu->pc, IR);
       exit(1);
