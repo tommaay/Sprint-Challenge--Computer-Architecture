@@ -179,6 +179,25 @@ void cpu_run(struct cpu *cpu)
       cpu->pc = cpu->reg[ops[1]] - ops[0] - 1;
       break;
 
+    case JEQ:
+      // If `equal` flag is set (true),
+      //jump to the address stored in the given register.
+      if (cpu->fl == 00000001)
+      {
+        cpu->pc = cpu->reg[ops[1]] - ops[0] - 1;
+      }
+      break;
+
+    case JNE:
+      //If `E` flag is clear (false, 0),
+      //jump to the address stored in the given
+      //register.
+      if ((cpu->fl & 0b00000001) == 0)
+      {
+        cpu->pc = cpu->reg[ops[1]] - ops[0] - 1;
+      }
+      break;
+
     default:
       printf("Unknown instruction at %d: %d\n", cpu->pc, IR);
       exit(1);
