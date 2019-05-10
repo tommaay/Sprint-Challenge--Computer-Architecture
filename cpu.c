@@ -176,7 +176,7 @@ void cpu_run(struct cpu *cpu)
     case JMP:
       // Jump to the address stored in the given register
       // Set the PC to the address stored in the given register.
-      cpu->pc = cpu->reg[ops[1]] - ops[0] - 1;
+      cpu->pc = cpu->reg[ops[0]] - ops[1] - 1;
       break;
 
     case JEQ:
@@ -184,7 +184,7 @@ void cpu_run(struct cpu *cpu)
       //jump to the address stored in the given register.
       if (cpu->fl == 00000001)
       {
-        cpu->pc = cpu->reg[ops[1]] - ops[0] - 1;
+        cpu->pc = cpu->reg[ops[0]] - ops[1] - 1;
       }
       break;
 
@@ -194,7 +194,7 @@ void cpu_run(struct cpu *cpu)
       //register.
       if ((cpu->fl & 0b00000001) == 0)
       {
-        cpu->pc = cpu->reg[ops[1]] - ops[0] - 1;
+        cpu->pc = cpu->reg[ops[0]] - ops[1] - 1;
       }
       break;
 
