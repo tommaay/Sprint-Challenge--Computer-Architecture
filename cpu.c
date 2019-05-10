@@ -159,42 +159,36 @@ void cpu_run(struct cpu *cpu)
     case CMP:
       if (cpu->reg[ops[0]] == cpu->reg[ops[1]])
       {
-        cpu->fl = 0b00000001;
+        cpu->fl = 0b00000000;
       }
-      // if op2 is greater set flag to 0b00000100
-      else if (cpu->reg[ops[0]] < cpu->reg[ops[1]])
-      {
-        cpu->fl = 0b00000100;
-      }
-      // if op1 is greater set flag to 0b00000010
       else if (cpu->reg[ops[0]] > cpu->reg[ops[1]])
       {
         cpu->fl = 0b00000010;
       }
+      else
+      {
+        cpu->fl = 0b00000100;
+      }
       break;
 
     case JMP:
-      // Jump to the address stored in the given register
-      // Set the PC to the address stored in the given register.
-      cpu->pc = cpu->reg[ops[0]] - ops[1] - 1;
+      cpu->pc = cpu->reg[ops[0]];
+      cpu->pc -= 1 + numOps;
       break;
 
     case JEQ:
-      // If `equal` flag is set (true),
-      //jump to the address stored in the given register.
-      if (cpu->fl == 00000001)
+      if (cpu->fl == 00000000)
       {
-        cpu->pc = cpu->reg[ops[0]] - ops[1] - 1;
+        cpu->pc = cpu->reg[ops[0]];
+        cpu->pc -= 1 + numOps;
       }
       break;
 
     case JNE:
-      //If `E` flag is clear (false, 0),
-      //jump to the address stored in the given
-      //register.
-      if ((cpu->fl & 0b00000001) == 0)
+      if (cpu->fl != 0)
       {
-        cpu->pc = cpu->reg[ops[0]] - ops[1] - 1;
+        cpu->pc = cpu->reg[ops[0]];
+        cpu->pc -= 1 + numOps;
       }
       break;
 
