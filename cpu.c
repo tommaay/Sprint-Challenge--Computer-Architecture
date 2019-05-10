@@ -154,7 +154,23 @@ void cpu_run(struct cpu *cpu)
       cpu->pc = cpu->ram[cpu->reg[7]];
       cpu->reg[7]++;
       cpu->pc -= 1 + numOps;
+      break;
 
+    case CMP:
+      if (cpu->reg[ops[0]] == cpu->reg[ops[1]])
+      {
+        cpu->fl = 0b00000001;
+      }
+      // if op2 is greater set flag to 0b00000100
+      else if (cpu->reg[ops[0]] < cpu->reg[ops[1]])
+      {
+        cpu->fl = 0b00000100;
+      }
+      // if op1 is greater set flag to 0b00000010
+      else if (cpu->reg[ops[0]] > cpu->reg[ops[1]])
+      {
+        cpu->fl = 0b00000010;
+      }
       break;
 
     default:
